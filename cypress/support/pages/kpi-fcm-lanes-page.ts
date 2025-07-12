@@ -45,7 +45,8 @@ class LanesPage {
    * @param columnIndex zero-based column index
    */
   getCenterColumnCells(columnIndex: number) {
-    return this.centerBodyRows.find(`td:nth-child(${columnIndex + 1})`);
+    return this.centerBodyRows
+      .find(`td:nth-child(${columnIndex + 1})`)
   }
 
   getCenterTotalCell(
@@ -53,5 +54,9 @@ class LanesPage {
   ): Cypress.Chainable<JQuery<HTMLTableCellElement>> {
     return this.centerTotalRow.find("td").eq(columnIndex);
   }
+
+  rowCount(): Cypress.Chainable<number> {
+  return this.centerBodyRows.its('length');
+}
 }
 export default new LanesPage();

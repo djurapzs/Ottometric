@@ -44,11 +44,11 @@ Cypress.Commands.add("goToKpiSensor", () => {
 });
 
 Cypress.Commands.add("goToFCM", () => {
-  homePage.fcmToggle.should("be.visible").click();
+  homePage.fcmToggle.click();
 });
 
 Cypress.Commands.add("goToLanes", () => {
-  homePage.lanesItem.should("be.visible").click();
+  homePage.lanesItem.click();
 });
 
 // Composite command: KPI Sensor → Lanes

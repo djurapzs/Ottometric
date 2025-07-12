@@ -11,7 +11,7 @@ class HomePage {
   /** The list that appears once you open the dropdown */
   get programOptionsList() {
     // MUI renders the menu as a <ul role="listbox"> appended to <body>
-    return cy.get('ul[role="listbox"]');
+    return cy.get('[role="listbox"]');
   }
 
   /** Top: HIL selector dropdown */

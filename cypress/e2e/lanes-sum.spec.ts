@@ -12,10 +12,10 @@ import tablePage from "../support/pages/table-page";
 describe("Check if the sum of values from each row corresponds with the value from the total row", () => {
   beforeEach(() => {
     stubPosthogArray();
-  });
-  it("should validate if total value corresponds with row sums", () => {
     cy.visit("/");
     cy.login();
+  });
+  it("should validate if total value corresponds with row sums", () => {
     cy.selectProgram(CameraPrograms.VT1);
     cy.goToKpiLanes();
 

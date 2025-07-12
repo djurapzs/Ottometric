@@ -43,6 +43,14 @@ class TablePage {
     return this.centerTable.find("tfoot tr");
   }
 
+  DTIDmultiSelect(checksNumber: number) {
+    this.centerTable.get('input[type="checkbox"]').each(($el, index) => {
+      if (index < checksNumber) {
+        cy.wrap($el).check();
+      }
+    });
+  }
+
   /**
    * Get all cells from a given numeric column index (zero-based)
    * @param columnIndex zero-based column index

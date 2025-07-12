@@ -1,4 +1,5 @@
 import "./pages/login-page";
+import LoginPage from "./pages/login-page";
 
 declare global {
   // Extend Cypress' Chainable interface to include custom commands
@@ -6,7 +7,7 @@ declare global {
   namespace Cypress {
     interface Chainable {
       login(): Chainable<void>;
-      selectProgram(name: string): Chainable<void>;
+      selectProgram(programName: string): Chainable<Element>;
       goToKpiLanes(): Chainable<void>;
     }
   }
@@ -15,8 +16,21 @@ declare global {
 Cypress.Commands.add("login", () => {
   const user = Cypress.env("user");
   const pass = Cypress.env("pass");
-  cy.visit("/");
-  cy.get('input[type="email"]').type(user);
-  cy.get('input[type="password"]').type(pass);
-  cy.get('button[type="submit"]').click();
+  LoginPage.fillEmail(user);
+  LoginPage.fillPassword(pass);
+  LoginPage.submit();
 });
+
+Cypress.Commands.add(
+  "selectProgram",
+  (programName: string = Cypress.env("programName")) => {
+    // open the dropdown
+    cy.get('[data-testid="program-picker-menu-select"]').click();
+    // pick the entry
+    cy.get('[data-testid="program-options-list"]')
+      .contains("li", programName)
+      .click();
+  }
+);
+
+export {};

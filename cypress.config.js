@@ -1,16 +1,24 @@
+// cypress.config.js
 const { defineConfig } = require("cypress");
-const dotenv = require('dotenv');
+const dotenv = require("dotenv");
+
+// 1. Load .env into process.env
 dotenv.config();
 
 module.exports = defineConfig({
+  env: {
+    user: process.env.CYPRESS_user,
+    pass: process.env.CYPRESS_pass,
+  },
+
   e2e: {
-    setupNodeEvents(on, config) {
-      // implement node event listeners here
-    },
     baseUrl: process.env.BASE_URL,
-    specPattern: 'cypress/e2e/**/*.spec.ts',
-    supportFile: 'cypress/support/e2e.js',
+
+    specPattern: "cypress/e2e/**/*.spec.{js,ts}",
+    supportFile: "cypress/support/commands.ts",
     defaultCommandTimeout: 10000,
     video: false,
+
+    setupNodeEvents(on, config) {},
   },
 });

@@ -1,5 +1,4 @@
 import "./pages/login-page";
-import "./pages/kpi-page";
 
 declare global {
   // Extend Cypress' Chainable interface to include custom commands

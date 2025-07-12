@@ -1,5 +1,5 @@
 const { defineConfig } = require("cypress");
-import dotenv from 'dotenv';
+const dotenv = require('dotenv');
 dotenv.config();
 
 module.exports = defineConfig({
@@ -8,7 +8,7 @@ module.exports = defineConfig({
       // implement node event listeners here
     },
     baseUrl: process.env.BASE_URL,
-    specPattern: 'cypress/e2e/**/*.spec.js',
+    specPattern: 'cypress/e2e/**/*.spec.ts',
     supportFile: 'cypress/support/e2e.js',
     defaultCommandTimeout: 10000,
     video: false,

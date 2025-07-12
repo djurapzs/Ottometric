@@ -4,7 +4,7 @@
  */
 class HomePage {
   /** Top: Program selector dropdown */
-  get programSelect() {
+  get programSelectDropdown() {
     return cy.get('[data-testid="program-picker-menu-select"]');
   }
 
@@ -70,7 +70,7 @@ class HomePage {
 
   /** Select a program by visible text */
   selectProgram(programName: string): void {
-    this.programSelect.click();
+    this.programSelectDropdown.click();
     this.programOptionsList.contains("li", programName).click();
   }
 

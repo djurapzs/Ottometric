@@ -39,5 +39,19 @@ class LanesPage {
   get centerTotalRow() {
     return this.centerTable.find("tfoot tr");
   }
+
+  /**
+   * Get all cells from a given numeric column index (zero-based)
+   * @param columnIndex zero-based column index
+   */
+  getCenterColumnCells(columnIndex: number) {
+    return this.centerBodyRows.find(`td:nth-child(${columnIndex + 1})`);
+  }
+
+  getCenterTotalCell(
+    columnIndex: number
+  ): Cypress.Chainable<JQuery<HTMLTableCellElement>> {
+    return this.centerTotalRow.find("td").eq(columnIndex);
+  }
 }
 export default new LanesPage();

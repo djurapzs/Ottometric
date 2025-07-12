@@ -7,7 +7,7 @@ import {
   getFooterValues,
 } from "../support/helpers/calculate-column-average";
 import { stubPosthogArray } from "../support/intercepts/pre-login";
-import kpiFcmLanesPage from "../support/pages/kpi-fcm-lanes-page";
+import tablePage from "../support/pages/table-page";
 
 describe("Check if the sum of values from each row corresponds with the value from the total row", () => {
   beforeEach(() => {
@@ -19,9 +19,9 @@ describe("Check if the sum of values from each row corresponds with the value fr
     cy.selectProgram(CameraPrograms.VT1);
     cy.goToKpiLanes();
 
-    getFooterValues(kpiFcmLanesPage.centerTable).then((footerValues) => {
+    getFooterValues(tablePage.centerTable).then((footerValues) => {
       calculateColumnAverages(
-        kpiFcmLanesPage.centerTable,
+        tablePage.centerTable,
         cy.wrap(footerValues)
       ).then((averages) => {
         assertTotalIsValid(footerValues, averages);

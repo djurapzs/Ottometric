@@ -19,6 +19,10 @@ class SidePanelPage {
     return cy.get('[data-testid="KPI Sensor-drawer"]');
   }
 
+  get kpiFeatureTab() {
+    return cy.get('[data-testid="KPI Feature-drawer"]');
+  }
+
   /** Left-nav: FCM sub-section under KPI Sensor */
   get fcmToggle() {
     return cy.get('[data-testid="FCM-drawer"]');
@@ -52,6 +56,10 @@ class SidePanelPage {
 
   goToKpiSensor(): void {
     this.kpiSensorTab.click();
+  }
+
+  goToKpiFeature(): void {
+    this.kpiFeatureTab.click();
   }
 
   goToNlQuery(): void {

@@ -14,6 +14,10 @@ declare global {
       goToFCM(): Chainable<void>;
       goToLanes(): Chainable<void>;
       goToKpiLanes(): Chainable<void>;
+      goToKpiFeature(): Chainable<void>;
+      goToZone1(): Chainable<void>;
+      goToISA(): Chainable<void>;
+      goToKpiZone1(): Chainable<void>;
     }
   }
 }
@@ -52,11 +56,27 @@ Cypress.Commands.add("goToLanes", () => {
   sidePanelPage.lanesItem.click();
 });
 
+Cypress.Commands.add("goToKpiFeature", () => {
+  sidePanelPage.kpiFeatureTab.click();
+});
+Cypress.Commands.add("goToZone1", () => {
+  sidePanelPage.zone1Item.click();
+});
+Cypress.Commands.add("goToISA", () => {
+  sidePanelPage.isaToggle.click();
+});
+
 // Composite command: KPI Sensor → Lanes
 Cypress.Commands.add("goToKpiLanes", () => {
   cy.goToKpiSensor();
   cy.goToFCM();
   cy.goToLanes();
+});
+
+Cypress.Commands.add("goToKpiZone1", () => {
+  cy.goToKpiFeature();
+  cy.goToISA();
+  cy.goToZone1();
 });
 
 export {};

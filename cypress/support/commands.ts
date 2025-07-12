@@ -1,6 +1,7 @@
+import headerPage from "./pages/header-page";
 import "./pages/login-page";
 import LoginPage from "./pages/login-page";
-import homePage from "./pages/home-page";
+import sidePanelPage from "./pages/side-panel-page";
 
 declare global {
   // Extend Cypress' Chainable interface to include custom commands
@@ -29,9 +30,9 @@ Cypress.Commands.add(
   "selectProgram",
   (programName: string = Cypress.env("programName")) => {
     // open the dropdown
-    homePage.programSelectDropdown.should("be.visible").click();
+    headerPage.programSelectDropdown.should("be.visible").click();
     // pick the entry
-    homePage.programOptionsList
+    headerPage.programOptionsList
       .should("be.visible")
       .contains("li", programName)
       .click();
@@ -40,15 +41,15 @@ Cypress.Commands.add(
 
 // Navigate through the left nav
 Cypress.Commands.add("goToKpiSensor", () => {
-  homePage.kpiSensorTab.should("be.visible").click();
+  sidePanelPage.kpiSensorTab.should("be.visible").click();
 });
 
 Cypress.Commands.add("goToFCM", () => {
-  homePage.fcmToggle.click();
+  sidePanelPage.fcmToggle.click();
 });
 
 Cypress.Commands.add("goToLanes", () => {
-  homePage.lanesItem.click();
+  sidePanelPage.lanesItem.click();
 });
 
 // Composite command: KPI Sensor → Lanes

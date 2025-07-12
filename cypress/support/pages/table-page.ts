@@ -1,11 +1,14 @@
-// cypress/support/pages/LanesPage.ts
+class TablePage {
+  /** Top-right: Download dropdown/button */
+  get downloadButton() {
+    return cy.get('[data-testid="download-pdf-csv"]');
+  }
 
-/**
- * Page Object Model for the "Lanes" report page under KPI Sensor → FCM
- * Handles the two-part table layout: left (identifiers) and center (numeric data)
- */
-class LanesPage {
-  /** Filters toggle button in the header */
+  /** Top-right: Table settings dropdown/button */
+  get tableSettingsButton() {
+    return cy.get('[data-testid="table-settings"');
+  }
+
   get filtersButton() {
     return cy.get('[data-testid="FilterAltOutlinedIcon"]');
   }
@@ -45,8 +48,7 @@ class LanesPage {
    * @param columnIndex zero-based column index
    */
   getCenterColumnCells(columnIndex: number) {
-    return this.centerBodyRows
-      .find(`td:nth-child(${columnIndex + 1})`)
+    return this.centerBodyRows.find(`td:nth-child(${columnIndex + 1})`);
   }
 
   getCenterTotalCell(
@@ -56,7 +58,16 @@ class LanesPage {
   }
 
   rowCount(): Cypress.Chainable<number> {
-  return this.centerBodyRows.its('length');
+    return this.centerBodyRows.its("length");
+  }
+
+  clickDownload(): void {
+    this.downloadButton.click();
+  }
+
+  openTableSettings(): void {
+    this.tableSettingsButton.click();
+  }
 }
-}
-export default new LanesPage();
+
+export default new TablePage();

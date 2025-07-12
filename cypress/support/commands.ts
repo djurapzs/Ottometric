@@ -1,5 +1,6 @@
 import "./pages/login-page";
 import LoginPage from "./pages/login-page";
+import homePage from "./pages/home-page";
 
 declare global {
   // Extend Cypress' Chainable interface to include custom commands
@@ -8,6 +9,9 @@ declare global {
     interface Chainable {
       login(): Chainable<void>;
       selectProgram(programName: string): Chainable<Element>;
+      goToKpiSensor(): Chainable<void>;
+      goToFCM(): Chainable<void>;
+      goToLanes(): Chainable<void>;
       goToKpiLanes(): Chainable<void>;
     }
   }
@@ -25,12 +29,33 @@ Cypress.Commands.add(
   "selectProgram",
   (programName: string = Cypress.env("programName")) => {
     // open the dropdown
-    cy.get('[data-testid="program-picker-menu-select"]').click();
+    homePage.programSelectDropdown.should("be.visible").click();
     // pick the entry
-    cy.get('[data-testid="program-options-list"]')
+    homePage.programOptionsList
+      .should("be.visible")
       .contains("li", programName)
       .click();
   }
 );
+
+// Navigate through the left nav
+Cypress.Commands.add("goToKpiSensor", () => {
+  homePage.kpiSensorTab.should("be.visible").click();
+});
+
+Cypress.Commands.add("goToFCM", () => {
+  homePage.fcmToggle.should("be.visible").click();
+});
+
+Cypress.Commands.add("goToLanes", () => {
+  homePage.lanesItem.should("be.visible").click();
+});
+
+// Composite command: KPI Sensor → Lanes
+Cypress.Commands.add("goToKpiLanes", () => {
+  cy.goToKpiSensor();
+  cy.goToFCM();
+  cy.goToLanes();
+});
 
 export {};

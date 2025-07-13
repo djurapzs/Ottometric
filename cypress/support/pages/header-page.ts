@@ -18,7 +18,7 @@ class HeaderPage {
     this.programOptionsList
       .get(`[data-testid=${programName}]`)
       .click({ force: true })
-      .wait(1000);
+      .wait(10000);
   }
 }
 

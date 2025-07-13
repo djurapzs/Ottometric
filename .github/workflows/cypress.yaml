@@ -31,7 +31,7 @@ jobs:
           npx cypress --version
           echo "CYPRESS_BASE_URL is $CYPRESS_BASE_URL"
       - name: Run Cypress tests
-        run: npx cypress run --headed --browser chrome
+        run: npx cypress run --headed --browser chrome --env viewportWidth=1920,viewportHeight=1080
       - name: Upload Cypress artifacts
         if: failure()
         uses: actions/upload-artifact@v4

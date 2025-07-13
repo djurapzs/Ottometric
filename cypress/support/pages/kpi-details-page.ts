@@ -29,7 +29,6 @@ class KpiDetailsPage {
       let total = 0;
 
       [...$items].forEach((item) => {
-        console.log("ITEMS:", item);
         const text = item.innerText.trim();
         const parsed = parseInt(text, 10);
         total += isNaN(parsed) ? 1 : parsed;

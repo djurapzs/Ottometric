@@ -2,14 +2,17 @@
 import { Zone1 } from "../support/enums/zone1.enum";
 import { CameraPrograms } from "../support/enums/camera-programs.enum";
 import { followRedirectionAndVisit } from "../support/helpers/handle-redirection";
-import { stubPosthogArray } from "../support/intercepts/pre-login";
-import { redirectRequest } from "../support/intercepts/redirect-request";
+import {
+  preLoginIntercepts,
+  redirectRequest,
+} from "../support/intercepts/pre-login";
 import kpiDetailsPage from "../support/pages/kpi-details-page";
 import tablePage from "../support/pages/table-page";
 
 describe("Count the FN events in the timeline.", () => {
   beforeEach(() => {
-    stubPosthogArray();
+    // Prevents unnecessary requests before login.
+    preLoginIntercepts();
     cy.visit("/");
     cy.login();
   });
@@ -18,14 +21,14 @@ describe("Count the FN events in the timeline.", () => {
 
     cy.selectProgram(CameraPrograms.VI1);
     cy.goToKpiZone1();
-
+    // Select the DTIDs for which we want to count the FN events (from 1 to N).
     tablePage.DTIDmultiSelect(7);
     tablePage.seeDetailsButton.should("be.enabled").click();
-
+    // Keeps cypress from failing due to a redirection (keeps him in same tab).
     followRedirectionAndVisit("VI1", "zone1");
 
     kpiDetailsPage.selectZone1Value(Zone1.FN);
-
+    // Result is displayed in dev tools console within the runner.
     kpiDetailsPage.getTotalEventCount().then((count) => {
       console.log("Total FN events count:", count);
     });

@@ -1,5 +1,3 @@
-// cypress/support/helpers/handle-redirection.ts
-
 /**
  * Waits for a redirection request and navigates to the resulting KPI details page.
  *

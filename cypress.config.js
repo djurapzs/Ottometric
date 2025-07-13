@@ -7,8 +7,8 @@ dotenv.config();
 
 module.exports = defineConfig({
   env: {
-    user: process.env.CYPRESS_user,
-    pass: process.env.CYPRESS_pass,
+    user: process.env.CYPRESS_USER,
+    pass: process.env.CYPRESS_PASS,
   },
 
   e2e: {

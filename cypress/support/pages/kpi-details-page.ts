@@ -21,7 +21,7 @@ class KpiDetailsPage {
   }
 
   selectZone1Value(zone1Value: Zone1) {
-    cy.get(`[id="group-checkbox-3-${zone1Value}"]`).check();
+    cy.get(`[id="group-checkbox-3-${zone1Value}"]`).check({ force: true });
   }
 
   getTotalEventCount(): Cypress.Chainable<number> {

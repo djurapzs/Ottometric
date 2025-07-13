@@ -12,13 +12,16 @@ class HeaderPage {
   }
 
   selectProgram(programName: string): void {
-    this.programSelectDropdown.click();
-    cy.wait(1000); // Wait for dropdown to open
-    this.programOptionsList.should("be.visible");
-    this.programOptionsList
-      .get(`[data-testid=${programName}]`)
-      .click({ force: true })
-      .wait(10000);
+    cy.wrap(null).then(() => {
+      this.programSelectDropdown.click();
+    }).then(() => {
+      cy.wait(1000); // Wait for dropdown to open
+      this.programOptionsList.should("be.visible");
+      this.programOptionsList
+        .get(`[data-testid=${programName}]`)
+        .click({ force: true })
+        .wait(10000);
+    });
   }
 }
 

@@ -49,11 +49,15 @@ class SidePanelPage {
   }
 
   goToKpiSensor(): void {
-    this.kpiSensorTab.click();
+    this.kpiSensorTab.should("be.visible").click();
+  }
+
+  goToLanes(): void {
+    this.lanesItem.should("be.visible").click();
   }
 
   goToKpiFeature(): void {
-    this.kpiFeatureTab.click();
+    this.kpiFeatureTab.should("be.visible").click();
   }
 
   goToNlQuery(): void {
@@ -66,11 +70,15 @@ class SidePanelPage {
   }
 
   clickIsaToggle(): void {
-    this.isaToggle.click();
+    this.isaToggle.should("be.visible").click();
   }
 
   clickZone1Item(): void {
-    this.zone1Item.click();
+    this.zone1Item.should("be.visible").click();
+  }
+
+  clickFcmToggle(): void {
+    this.fcmToggle.should("be.visible").click();
   }
 }
 

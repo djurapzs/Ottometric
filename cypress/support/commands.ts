@@ -2,6 +2,7 @@ import headerPage from "./pages/header-page";
 import "./pages/login-page";
 import LoginPage from "./pages/login-page";
 import sidePanelPage from "./pages/side-panel-page";
+import tablePage from "./pages/table-page";
 
 declare global {
   // Extend Cypress' Chainable interface to include custom commands
@@ -43,25 +44,25 @@ Cypress.Commands.add(
 
 // Navigate through the left nav
 Cypress.Commands.add("goToKpiSensor", () => {
-  sidePanelPage.kpiSensorTab.should("be.visible").click();
+  sidePanelPage.goToKpiSensor();
 });
 
 Cypress.Commands.add("goToFCM", () => {
-  sidePanelPage.fcmToggle.click();
+  sidePanelPage.clickFcmToggle();
 });
 
 Cypress.Commands.add("goToLanes", () => {
-  sidePanelPage.lanesItem.click();
+  sidePanelPage.goToLanes();
 });
 
 Cypress.Commands.add("goToKpiFeature", () => {
-  sidePanelPage.kpiFeatureTab.click();
+  sidePanelPage.goToKpiFeature();
 });
 Cypress.Commands.add("goToZone1", () => {
-  sidePanelPage.zone1Item.click();
+  sidePanelPage.clickZone1Item();
 });
 Cypress.Commands.add("goToISA", () => {
-  sidePanelPage.isaToggle.click();
+  sidePanelPage.clickIsaToggle();
 });
 
 // Composite command: KPI Sensor → Lanes
@@ -69,12 +70,14 @@ Cypress.Commands.add("goToKpiLanes", () => {
   cy.goToKpiSensor();
   cy.goToFCM();
   cy.goToLanes();
+  tablePage.centerTable.should("be.visible");
 });
 
 Cypress.Commands.add("goToKpiZone1", () => {
   cy.goToKpiFeature();
   cy.goToISA();
   cy.goToZone1();
+  tablePage.centerTable.should("be.visible");
 });
 
 export {};

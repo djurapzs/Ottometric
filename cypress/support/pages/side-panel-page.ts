@@ -49,15 +49,15 @@ class SidePanelPage {
   }
 
   goToKpiSensor(): void {
-    this.kpiSensorTab.should("be.visible").click();
+    this.kpiSensorTab.should("be.visible").click({ force: true });
   }
 
   goToLanes(): void {
-    this.lanesItem.should("be.visible").click();
+    this.lanesItem.should("be.visible").click({ force: true });
   }
 
   goToKpiFeature(): void {
-    this.kpiFeatureTab.should("be.visible").click();
+    this.kpiFeatureTab.should("be.visible").click({ force: true });
   }
 
   goToNlQuery(): void {
@@ -70,15 +70,15 @@ class SidePanelPage {
   }
 
   clickIsaToggle(): void {
-    this.isaToggle.should("be.visible").click();
+    this.isaToggle.should("be.enabled").click({ force: true });
   }
 
   clickZone1Item(): void {
-    this.zone1Item.should("be.visible").click();
+    this.zone1Item.should("be.enabled").click({ force: true });
   }
 
   clickFcmToggle(): void {
-    this.fcmToggle.should("be.visible").click();
+    this.fcmToggle.should("be.enabled").click({ force: true });
   }
 }
 

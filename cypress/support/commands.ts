@@ -65,7 +65,6 @@ Cypress.Commands.add("goToISA", () => {
   sidePanelPage.clickIsaToggle();
 });
 
-// Composite command: KPI Sensor → Lanes
 Cypress.Commands.add("goToKpiLanes", () => {
   cy.goToKpiSensor();
   cy.goToFCM();

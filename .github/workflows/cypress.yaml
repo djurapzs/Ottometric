@@ -1,36 +1,42 @@
 name: Run Cypress Tests
-
 on:
-  workflow_dispatch: # Manual trigger
+  workflow_dispatch:
   schedule:
-    - cron: "0 5 * * *" # Runs daily at 5 AM UTC (adjust as needed)
+    - cron: "0 5 * * *"
   push:
     branches:
       - develop
   pull_request:
     branches:
       - develop
-
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
-
-    env: # Pull secrets into runtime environment
+    env:
       CYPRESS_BASE_URL: ${{ secrets.BASE_URL }}
       CYPRESS_user: ${{ secrets.CYPRESS_USER }}
       CYPRESS_pass: ${{ secrets.CYPRESS_PASS }}
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
-
       - name: Install dependencies
         run: npm ci
-
+      - name: Debug environment
+        run: |
+          node --version
+          npx cypress --version
+          echo "CYPRESS_BASE_URL is $CYPRESS_BASE_URL"
       - name: Run Cypress tests
         run: npx cypress run --browser chrome
+      - name: Upload Cypress artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-artifacts
+          path: |
+            cypress/screenshots
+            cypress/videos

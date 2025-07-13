@@ -33,9 +33,7 @@ Cypress.Commands.add("login", () => {
 Cypress.Commands.add(
   "selectProgram",
   (programName: string = Cypress.env("programName")) => {
-    // open the dropdown
     headerPage.programSelectDropdown.should("be.visible").click();
-    // pick the entry
     headerPage.programOptionsList
       .should("be.visible")
       .contains("li", programName)

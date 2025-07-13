@@ -1,43 +1,44 @@
-// cypress/support/pages/LanesPage.ts
+class TablePage {
+  get downloadButton() {
+    return cy.get('[data-testid="download-pdf-csv"]');
+  }
 
-/**
- * Page Object Model for the "Lanes" report page under KPI Sensor → FCM
- * Handles the two-part table layout: left (identifiers) and center (numeric data)
- */
-class LanesPage {
-  /** Filters toggle button in the header */
+  get tableSettingsButton() {
+    return cy.get('[data-testid="table-settings"');
+  }
+
   get filtersButton() {
     return cy.get('[data-testid="FilterAltOutlinedIcon"]');
   }
-
-  /** "See details" button (enabled when rows are selected) */
   get seeDetailsButton() {
     return cy.get('[data-testid="sendToDetails"]');
   }
 
-  /** Left-portion table (identifiers) */
   get leftTable() {
     return cy.get('[data-testid="table-left"]');
   }
-
-  /** Center-portion table (numeric data) */
   get centerTable() {
     return cy.get('[data-testid="table-center"]');
   }
 
-  /** All header cells in the numeric (center) table */
   get centerHeaderCells() {
     return this.centerTable.find("thead th");
   }
 
-  /** All data rows in the numeric (center) table */
   get centerBodyRows() {
     return this.centerTable.find("tbody tr");
   }
 
-  /** Footer row (totals) in the numeric (center) table */
   get centerTotalRow() {
     return this.centerTable.find("tfoot tr");
+  }
+
+  DTIDmultiSelect(checksNumber: number) {
+    this.centerTable.get('input[type="checkbox"]').each(($el, index) => {
+      if (index < checksNumber) {
+        cy.wrap($el).check();
+      }
+    });
   }
 
   /**
@@ -45,8 +46,7 @@ class LanesPage {
    * @param columnIndex zero-based column index
    */
   getCenterColumnCells(columnIndex: number) {
-    return this.centerBodyRows
-      .find(`td:nth-child(${columnIndex + 1})`)
+    return this.centerBodyRows.find(`td:nth-child(${columnIndex + 1})`);
   }
 
   getCenterTotalCell(
@@ -56,7 +56,16 @@ class LanesPage {
   }
 
   rowCount(): Cypress.Chainable<number> {
-  return this.centerBodyRows.its('length');
+    return this.centerBodyRows.its("length");
+  }
+
+  clickDownload(): void {
+    this.downloadButton.click();
+  }
+
+  openTableSettings(): void {
+    this.tableSettingsButton.click();
+  }
 }
-}
-export default new LanesPage();
+
+export default new TablePage();

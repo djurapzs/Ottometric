@@ -4,6 +4,12 @@ on:
   workflow_dispatch: # Manual trigger
   schedule:
     - cron: "0 5 * * *" # Runs daily at 5 AM UTC (adjust as needed)
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - develop
 
 jobs:
   cypress-run:

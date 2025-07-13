@@ -16,7 +16,7 @@ class SidePanelPage {
   }
 
   get kpiFeatureTab() {
-    return cy.get('[data-testid="KPI Feature-drawer"]');
+    return cy.get('[data-testid="KPI Feature-drawer"]', { timeout: 10000 });
   }
 
   get fcmToggle() {

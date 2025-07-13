@@ -14,6 +14,7 @@ class HeaderPage {
 
   selectProgram(programName: string): void {
     this.programSelectDropdown.click();
+    this.programOptionsList.should("be.visible");
     this.programOptionsList.contains("li", programName).click();
   }
 }

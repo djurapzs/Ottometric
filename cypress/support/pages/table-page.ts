@@ -46,17 +46,19 @@ class TablePage {
    * @param columnIndex zero-based column index
    */
   getCenterColumnCells(columnIndex: number) {
-    return this.centerBodyRows.find(`td:nth-child(${columnIndex + 1})`);
+    return this.centerBodyRows
+      .should("be.visible")
+      .find(`td:nth-child(${columnIndex + 1})`);
   }
 
   getCenterTotalCell(
     columnIndex: number
   ): Cypress.Chainable<JQuery<HTMLTableCellElement>> {
-    return this.centerTotalRow.find("td").eq(columnIndex);
+    return this.centerTotalRow.should("be.visible").find("td").eq(columnIndex);
   }
 
   rowCount(): Cypress.Chainable<number> {
-    return this.centerBodyRows.its("length");
+    return this.centerBodyRows.should("be.visible").its("length");
   }
 
   clickDownload(): void {

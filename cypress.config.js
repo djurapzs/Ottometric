@@ -17,7 +17,7 @@ module.exports = defineConfig({
     specPattern: "cypress/e2e/**/*.spec.{js,ts}",
     supportFile: "cypress/support/commands.ts",
     defaultCommandTimeout: 10000,
-    video: false,
+    video: true,
 
     setupNodeEvents(on, config) {},
   },

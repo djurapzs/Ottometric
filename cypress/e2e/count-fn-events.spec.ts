@@ -14,7 +14,7 @@ const TEST_DATA = {
   dtidCount: 7,
 } as const;
 
-describe("Count the FN events in the timeline.", () => {
+describe("FN Events Timeline", () => {
   let helper: CountFnEventsHelper;
 
   beforeEach(() => {
@@ -28,19 +28,22 @@ describe("Count the FN events in the timeline.", () => {
     helper = new CountFnEventsHelper(TEST_DATA);
   });
 
-  it("should count the FN events for the selected DTIDs in the timeline.", () => {
-    cy.log(`Starting FN event count test with ${TEST_DATA.dtidCount} DTIDs`);
+  describe("Event Counting", () => {
+    it("should count FN events for selected DTIDs", () => {
+      cy.log(`Starting FN event count test with ${TEST_DATA.dtidCount} DTIDs`);
+      redirectRequest();
 
-    // Arrange - Navigate to the test environment
-    helper.navigateToKpiZone1();
+      // Arrange - Navigate to the test environment
+      helper.navigateToKpiZone1();
 
-    // Act - Select DTIDs and navigate to details
-    helper.selectDTIDsAndNavigateToDetails();
+      // Act - Select DTIDs and navigate to details
+      helper.selectDTIDsAndNavigateToDetails();
 
-    // Act - Access timeline and select zone
-    helper.accessTimelineAndSelectZone();
+      // Act - Access timeline and select zone
+      helper.accessTimelineAndSelectZone();
 
-    // Assert - Validate event count
-    helper.validateEventCount();
+      // Assert - Validate event count
+      helper.validateEventCount();
+    });
   });
 });

@@ -6,12 +6,14 @@ import {
   preLoginIntercepts,
 } from "../support/intercepts/pre-login";
 import { CountFnEventsHelper } from "../support/helpers/count-fn-events-helper";
+import { ICountFnEventsTestData } from "../support/interfaces";
 
 // Test data constants for better maintainability
-const TEST_DATA = {
+const TEST_DATA: ICountFnEventsTestData = {
   program: CameraPrograms.VI1,
   zone: Zone1.FN,
   dtidCount: 7,
+  description: "Test counting FN events in Zone1 for VI1 program",
 } as const;
 
 describe("FN Events Timeline", () => {
@@ -34,10 +36,10 @@ describe("FN Events Timeline", () => {
       redirectRequest();
 
       // Arrange - Navigate to the test environment
-      helper.navigateToKpiZone1();
+      helper.navigateToKpiZone();
 
       // Act - Select DTIDs and navigate to details
-      helper.selectDTIDsAndNavigateToDetails();
+      helper.selectItemsAndNavigateToDetails();
 
       // Act - Access timeline and select zone
       helper.accessTimelineAndSelectZone();

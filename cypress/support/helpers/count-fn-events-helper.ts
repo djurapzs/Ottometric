@@ -3,17 +3,12 @@ import { Zone1 } from "../enums/zone1.enum";
 import { followRedirectionAndVisit } from "./handle-redirection-helper";
 import kpiDetailsPage from "../pages/kpi-details-page";
 import tablePage from "../pages/table-page";
+import { ICountFnEventsTestData, IEventCountingHelper } from "../interfaces";
 
-export interface CountFnEventsTestData {
-  program: CameraPrograms;
-  zone: Zone1;
-  dtidCount: number;
-}
+export class CountFnEventsHelper implements IEventCountingHelper {
+  constructor(public readonly testData: ICountFnEventsTestData) {}
 
-export class CountFnEventsHelper {
-  constructor(private testData: CountFnEventsTestData) {}
-
-  navigateToKpiZone1(): void {
+  navigateToKpiZone(): void {
     cy.log(`Selecting program: ${this.testData.program}`);
     cy.selectProgram(this.testData.program);
 
@@ -22,7 +17,7 @@ export class CountFnEventsHelper {
     tablePage.waitForTableToLoad();
   }
 
-  selectDTIDsAndNavigateToDetails(): void {
+  selectItemsAndNavigateToDetails(): void {
     cy.log(`Selecting ${this.testData.dtidCount} DTIDs from table`);
     // Select the DTIDs for which we want to count the FN events (from 1 to N).
     tablePage.DTIDmultiSelect(this.testData.dtidCount);
@@ -38,7 +33,7 @@ export class CountFnEventsHelper {
     kpiDetailsPage.clickTimelineMenuItemIfNotVisible();
 
     cy.log(`Selecting zone: ${this.testData.zone}`);
-    kpiDetailsPage.selectZone1Value(this.testData.zone);
+    kpiDetailsPage.selectZone1Value(this.testData.zone as Zone1);
   }
 
   validateEventCount(): void {

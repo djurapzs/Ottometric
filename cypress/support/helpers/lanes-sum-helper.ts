@@ -3,16 +3,12 @@ import { assertTotalIsValid } from "../assertations/assert-total-is-valid";
 import {
   calculateColumnAverages,
   getFooterValues,
-} from "./calculate-column-average-helper";
+} from "./calculate-column-average";
 import tablePage from "../pages/table-page";
+import { ILanesSumTestData, ILanesSumHelper } from "../interfaces";
 
-export interface LanesSumTestData {
-  program: CameraPrograms;
-  tolerance: number;
-}
-
-export class LanesSumHelper {
-  constructor(private testData: LanesSumTestData) {}
+export class LanesSumHelper implements ILanesSumHelper {
+  constructor(public readonly testData: ILanesSumTestData) {}
 
   navigateToKpiLanes(): void {
     cy.log(`Selecting program: ${this.testData.program}`);

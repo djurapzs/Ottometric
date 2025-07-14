@@ -33,6 +33,23 @@ class TablePage {
     return this.centerTable.find("tfoot tr");
   }
 
+  get tableHiddenMessage() {
+    return cy
+      .get('[class="page-container"]')
+      .contains("All columns have been hidden");
+  }
+
+  waitUntilTableIsVisible(): Cypress.Chainable<JQuery<HTMLBodyElement>> {
+  return cy.get('body').then(($body) => {
+    // Check if the hidden message is currently in DOM
+    if ($body.find('.page-container:contains("All columns have been hidden")').length > 0) {
+      // Wait for it to disappear
+      cy.contains('.page-container', 'All columns have been hidden', { timeout: 10000 })
+        .should('not.exist');
+    }
+  });
+}
+
   DTIDmultiSelect(checksNumber: number) {
     this.centerTable.get('input[type="checkbox"]').each(($el, index) => {
       if (index < checksNumber) {

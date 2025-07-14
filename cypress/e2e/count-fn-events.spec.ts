@@ -8,6 +8,7 @@ import {
 } from "../support/intercepts/pre-login";
 import kpiDetailsPage from "../support/pages/kpi-details-page";
 import tablePage from "../support/pages/table-page";
+import { table } from "console";
 
 describe("Count the FN events in the timeline.", () => {
   beforeEach(() => {
@@ -20,6 +21,7 @@ describe("Count the FN events in the timeline.", () => {
     redirectRequest();
 
     cy.selectProgram(CameraPrograms.VI1);
+    tablePage.waitUntilTableIsVisible();
     cy.goToKpiZone1();
     // Select the DTIDs for which we want to count the FN events (from 1 to N).
     tablePage.DTIDmultiSelect(7);

@@ -18,28 +18,42 @@ const TEST_DATA = {
 
 describe("Count the FN events in the timeline.", () => {
   beforeEach(() => {
+    cy.log("Setting up test environment for FN event counting");
     // Prevents unnecessary requests before login.
     preLoginIntercepts();
     cy.visit("/");
     cy.login();
   });
   it("should count the FN events for the selected DTIDs in the timeline.", () => {
+    cy.log(`Starting FN event count test with ${TEST_DATA.dtidCount} DTIDs`);
     redirectRequest();
 
+    cy.log(`Selecting program: ${TEST_DATA.program}`);
     cy.selectProgram(TEST_DATA.program);
+
+    cy.log("Navigating to KPI Zone1");
     cy.goToKpiZone1();
     tablePage.waitForTableToLoad();
+
+    cy.log(`Selecting ${TEST_DATA.dtidCount} DTIDs from table`);
     // Select the DTIDs for which we want to count the FN events (from 1 to N).
     tablePage.DTIDmultiSelect(TEST_DATA.dtidCount);
     tablePage.clickSeeDetailsButton();
+
+    cy.log("Handling redirection to details page");
     // Keeps cypress from failing due to a redirection (keeps him in same tab).
     followRedirectionAndVisit("VI1", "zone1");
 
+    cy.log("Accessing timeline view");
     kpiDetailsPage.clickTimelineMenuItemIfNotVisible();
 
+    cy.log(`Selecting zone: ${TEST_DATA.zone}`);
     kpiDetailsPage.selectZone1Value(TEST_DATA.zone);
+
+    cy.log("Retrieving and validating FN event count");
     // Result is displayed in dev tools console within the runner.
     kpiDetailsPage.getTotalEventCount().then((count) => {
+      cy.log(`Total FN events count: ${count}`);
       console.log("Total FN events count:", count);
     });
   });

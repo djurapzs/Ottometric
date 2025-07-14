@@ -1,18 +1,22 @@
 class LoginPage {
+  private readonly emailInputField = '[data-testid="email-input-field"]';
+  private readonly passwordInputField = '[data-testid="password-input-field"]';
+  private readonly loginButton = '[data-testid="otto-login-btn"]';
+
   visit(): void {
     cy.visit("/");
   }
 
   fillEmail(email: string): void {
-    cy.get('[data-testid="email-input-field"]').clear().type(email);
+    cy.get(this.emailInputField).clear().type(email);
   }
 
   fillPassword(password: string): void {
-    cy.get('[data-testid="password-input-field"]').clear().type(password);
+    cy.get(this.passwordInputField).clear().type(password);
   }
 
   submit(): void {
-    cy.get('[data-testid="otto-login-btn"]').click();
+    cy.get(this.loginButton).click();
   }
 }
 

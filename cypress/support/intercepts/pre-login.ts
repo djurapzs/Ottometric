@@ -88,4 +88,5 @@ export function preLoginIntercepts() {
   stubSentryRequests();
   stubTagsNewIntercept();
   stubNotationsIntercept();
+  redirectRequest();
 }

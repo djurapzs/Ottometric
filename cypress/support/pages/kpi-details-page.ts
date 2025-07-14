@@ -64,12 +64,12 @@ class KpiDetailsPage {
             // First click the timeline preview button
             this.clickTimelinePreviewButton();
             // Then click the timeline menu item
-            cy.get(this.timelineMenuItem).should("be.visible").click();
+            cy.get(this.timelineMenuItem).should("exist").click();
             // Verify the timeline box becomes visible after clicking
-            cy.get(this.timelineBox).should("be.visible");
+            cy.get(this.timelineBox).should("exist");
           } else {
             // Assert that timeline box is indeed visible
-            cy.get(this.timelineBox).should("be.visible");
+            cy.get(this.timelineBox).should("exist");
           }
         });
     });

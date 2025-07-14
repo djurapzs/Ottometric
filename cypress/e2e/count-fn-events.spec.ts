@@ -21,7 +21,6 @@ describe("Count the FN events in the timeline.", () => {
     redirectRequest();
 
     cy.selectProgram(CameraPrograms.VI1);
-    tablePage.waitUntilTableIsVisible();
     cy.goToKpiZone1();
     tablePage.waitForTableToLoad();
     // Select the DTIDs for which we want to count the FN events (from 1 to N).

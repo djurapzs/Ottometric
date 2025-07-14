@@ -29,6 +29,8 @@ describe("Count the FN events in the timeline.", () => {
     // Keeps cypress from failing due to a redirection (keeps him in same tab).
     followRedirectionAndVisit("VI1", "zone1");
 
+    kpiDetailsPage.waitForCameraLoaderToDisappear();
+
     kpiDetailsPage.selectZone1Value(Zone1.FN);
     // Result is displayed in dev tools console within the runner.
     kpiDetailsPage.getTotalEventCount().then((count) => {

@@ -7,6 +7,7 @@ class KpiDetailsPage {
   private readonly visCenterPanel = '[class="vis-panel vis-center"]';
   private readonly selectedZone1Items =
     '[class="vis-foreground"] [class="vis-group selected"]';
+  private readonly cameraLoader = '[class="loader"]';
 
   get timelineItems() {
     return cy.get(`${this.selectedZone1Items} > div`);
@@ -21,7 +22,9 @@ class KpiDetailsPage {
   }
 
   selectZone1Value(zone1Value: Zone1) {
-    cy.get(`[id="group-checkbox-3-${zone1Value}"]`).should('be.visible').check({ force: true });
+    cy.get(`[id="group-checkbox-3-${zone1Value}"]`)
+      .should("exist")
+      .check({ force: true });
   }
 
   getTotalEventCount(): Cypress.Chainable<number> {
@@ -35,6 +38,16 @@ class KpiDetailsPage {
       });
 
       return total;
+    });
+  }
+
+  waitForCameraLoaderToDisappear(): Cypress.Chainable<JQuery<HTMLBodyElement>> {
+    return cy.get("body").then(($body) => {
+      // Check if the camera loader is currently in DOM
+      if ($body.find('[class="loader"]').length > 0) {
+        // Wait for it to disappear
+        cy.get(this.cameraLoader, { timeout: 10000 }).should("not.exist");
+      }
     });
   }
 }

@@ -6,22 +6,23 @@ import {
   calculateColumnAverages,
   getFooterValues,
 } from "../support/helpers/calculate-column-average";
-import { stubPosthogArray } from "../support/intercepts/pre-login";
-import kpiFcmLanesPage from "../support/pages/kpi-fcm-lanes-page";
+import { preLoginIntercepts } from "../support/intercepts/pre-login";
+import tablePage from "../support/pages/table-page";
 
 describe("Check if the sum of values from each row corresponds with the value from the total row", () => {
   beforeEach(() => {
-    stubPosthogArray();
-  });
-  it("should validate if total value corresponds with row sums", () => {
+    // Prevents unnecessary requests before login.
+    preLoginIntercepts();
     cy.visit("/");
     cy.login();
+  });
+  it("should validate if total value corresponds with row sums", () => {
     cy.selectProgram(CameraPrograms.VT1);
     cy.goToKpiLanes();
 
-    getFooterValues(kpiFcmLanesPage.centerTable).then((footerValues) => {
+    getFooterValues(tablePage.centerTable).then((footerValues) => {
       calculateColumnAverages(
-        kpiFcmLanesPage.centerTable,
+        tablePage.centerTable,
         cy.wrap(footerValues)
       ).then((averages) => {
         assertTotalIsValid(footerValues, averages);

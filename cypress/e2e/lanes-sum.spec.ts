@@ -10,7 +10,7 @@ const TEST_DATA = {
   tolerance: 0.1,
 } as const;
 
-describe("Check if the sum of values from each row corresponds with the value from the total row", () => {
+describe("Lane Sum Validation", () => {
   let helper: LanesSumHelper;
 
   beforeEach(() => {
@@ -24,15 +24,17 @@ describe("Check if the sum of values from each row corresponds with the value fr
     helper = new LanesSumHelper(TEST_DATA);
   });
 
-  it("should validate if total value corresponds with row sums", () => {
-    cy.log(
-      `Starting lane sum validation test for program: ${TEST_DATA.program}`
-    );
+  describe("Row vs Total Validation", () => {
+    it("should validate that total values match row sums", () => {
+      cy.log(
+        `Starting lane sum validation test for program: ${TEST_DATA.program}`
+      );
 
-    // Arrange - Navigate to the test environment
-    helper.navigateToKpiLanes();
+      // Arrange - Navigate to the test environment
+      helper.navigateToKpiLanes();
 
-    // Act & Assert - Validate row sum calculations
-    helper.validateRowSumCalculation();
+      // Act & Assert - Validate row sum calculations
+      helper.validateRowSumCalculation();
+    });
   });
 });

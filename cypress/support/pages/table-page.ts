@@ -33,29 +33,24 @@ class TablePage {
     return this.centerTable.find("tfoot tr");
   }
 
-  get tableHiddenMessage() {
-    return cy
-      .get('[class="page-container"]')
-      .contains("All columns have been hidden");
-  }
-
-  waitUntilTableIsVisible(): Cypress.Chainable<JQuery<HTMLBodyElement>> {
-  return cy.get('body').then(($body) => {
-    // Check if the hidden message is currently in DOM
-    if ($body.find('.page-container:contains("All columns have been hidden")').length > 0) {
-      // Wait for it to disappear
-      cy.contains('.page-container', 'All columns have been hidden', { timeout: 10000 })
-        .should('not.exist');
-    }
-  });
-}
-
+  /**
+   * Selects multiple checkboxes in the table
+   * @param checksNumber Number of checkboxes to select
+   */
   DTIDmultiSelect(checksNumber: number) {
+    cy.log(`Selecting ${checksNumber} checkboxes`);
+
+    // Ensure table is ready before interaction
+    this.ensureTableReady();
+
     this.centerTable.get('input[type="checkbox"]').each(($el, index) => {
       if (index < checksNumber) {
+        cy.wait(500);
         cy.wrap($el).check();
       }
     });
+
+    cy.log(`Successfully selected ${checksNumber} checkboxes`);
   }
 
   /**
@@ -84,6 +79,48 @@ class TablePage {
 
   openTableSettings(): void {
     this.tableSettingsButton.click();
+  }
+
+  clickSeeDetailsButton(): void {
+    this.seeDetailsButton.should("be.enabled").click();
+  }
+
+  /**
+   * Waits for the table to load and become interactive
+   * Uses a flexible approach that handles various loading states
+   */
+  waitForTableToLoad(): void {
+    // First, wait for the table element to exist in DOM
+    this.centerTable.should("exist");
+
+    // Then wait for it to have content (rows)
+    this.centerBodyRows.should("have.length.greaterThan", 0);
+
+    // Optionally check visibility, but don't fail if it's not immediately visible
+    // This handles cases where table might be rendered but not in viewport
+    cy.get('[data-testid="table-center"]').then(($table) => {
+      if (!$table.is(":visible")) {
+        cy.log("Table not visible, scrolling into view...");
+        cy.wrap($table).scrollIntoView();
+      }
+    });
+
+    // Wait for any potential dynamic content to settle
+    cy.wait(500);
+  }
+
+  /**
+   * Ensures table is ready for interaction
+   * More robust than hard visibility assertion
+   */
+  ensureTableReady(): void {
+    this.centerTable.should("exist");
+    this.centerBodyRows.should("have.length.greaterThan", 0);
+
+    // Check if table has checkboxes before proceeding
+    this.centerTable
+      .get('[type="checkbox"]')
+      .should("have.length.greaterThan", 0);
   }
 }
 

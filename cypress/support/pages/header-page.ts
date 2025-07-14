@@ -1,20 +1,23 @@
 class HeaderPage {
+  private readonly programSelectDropdownSelector = '[data-testid="program-picker-menu-select"]';
+  private readonly programOptionsListSelector = '[role="listbox"]';
+  private readonly hilSelectSelector = '[data-testid="hil-version-menu-select"]';
 
   get programSelectDropdown() {
-    return cy.get('[data-testid="program-picker-menu-select"]');
+    return cy.get(this.programSelectDropdownSelector);
   }
 
   get programOptionsList() {
-    return cy.get('[role="listbox"]');
+    return cy.get(this.programOptionsListSelector);
   }
 
   get hilSelect() {
-    return cy.get('[data-testid="hil-version-menu-select"]');
+    return cy.get(this.hilSelectSelector);
   }
 
   selectProgram(programName: string): void {
-    this.programSelectDropdown.click();
-    this.programOptionsList.contains("li", programName).click();
+    cy.get(this.programSelectDropdownSelector).click();
+    cy.get(this.programOptionsListSelector).contains("li", programName).click();
   }
 }
 

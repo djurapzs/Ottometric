@@ -21,9 +21,10 @@ describe("Count the FN events in the timeline.", () => {
 
     cy.selectProgram(CameraPrograms.VI1);
     cy.goToKpiZone1();
+    tablePage.waitForTableToLoad();
     // Select the DTIDs for which we want to count the FN events (from 1 to N).
     tablePage.DTIDmultiSelect(7);
-    tablePage.seeDetailsButton.should("be.enabled").click();
+    tablePage.clickSeeDetailsButton();
     // Keeps cypress from failing due to a redirection (keeps him in same tab).
     followRedirectionAndVisit("VI1", "zone1");
 

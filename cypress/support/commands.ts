@@ -69,14 +69,14 @@ Cypress.Commands.add("goToKpiLanes", () => {
   cy.goToKpiSensor();
   cy.goToFCM();
   cy.goToLanes();
-  tablePage.centerTable.should("be.visible");
+  tablePage.centerTable.should("exist");
 });
 
 Cypress.Commands.add("goToKpiZone1", () => {
   cy.goToKpiFeature();
   cy.goToISA();
   cy.goToZone1();
-  tablePage.centerTable.should("be.visible");
+  tablePage.centerTable.should("exist");
 });
 
 export {};

@@ -1,4 +1,3 @@
-import { CameraPrograms } from "../enums/camera-programs.enum";
 import { Zone1 } from "../enums/zone1.enum";
 import { followRedirectionAndVisit } from "./handle-redirection-helper";
 import kpiDetailsPage from "../pages/kpi-details-page";

@@ -1,4 +1,3 @@
-import { CameraPrograms } from "../enums/camera-programs.enum";
 import { assertTotalIsValid } from "../assertations/assert-total-is-valid";
 import {
   calculateColumnAverages,

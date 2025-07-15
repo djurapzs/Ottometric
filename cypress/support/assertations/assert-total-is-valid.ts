@@ -1,3 +1,16 @@
+/**
+ * Assertion utility for validating numerical data accuracy in Cypress tests.
+ *
+ * This function compares arrays of expected vs actual numerical values using
+ * configurable tolerance levels, making it ideal for testing calculated totals,
+ * sums, and other numerical computations where exact matches aren't feasible
+ * due to floating-point precision or rounding differences.
+ *
+ * @param expected - Array of expected numerical values
+ * @param actual - Array of actual values to validate against expected
+ * @param config - Configuration object with tolerance, message, and logging options
+ */
+
 import { IAssertionConfig } from "../interfaces";
 
 export const assertTotalIsValid = (

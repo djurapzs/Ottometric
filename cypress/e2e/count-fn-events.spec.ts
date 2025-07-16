@@ -33,6 +33,8 @@ describe("FN Events Timeline", () => {
   describe("Event Counting", () => {
     it("should count FN events for selected DTIDs", () => {
       cy.log(`Starting FN event count test with ${TEST_DATA.dtidCount} DTIDs`);
+
+      // Set up redirection handler before any navigation
       redirectRequest();
 
       // Arrange - Navigate to the test environment
@@ -40,6 +42,11 @@ describe("FN Events Timeline", () => {
 
       // Act - Select DTIDs and navigate to details
       helper.selectItemsAndNavigateToDetails();
+
+      // Wait for redirection to complete after navigating to details
+      cy.wait("@redirectRequest", { timeout: 10000 }).then(() => {
+        cy.log("Redirection request completed");
+      });
 
       // Act - Access timeline and select zone
       helper.accessTimelineAndSelectZone();

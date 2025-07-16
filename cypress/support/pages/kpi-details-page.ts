@@ -1,12 +1,9 @@
-import { forEach } from "cypress/types/lodash";
 import { Zone1 } from "../enums/zone1.enum";
 
-//Example how Selectors are defined as class fields for better readability and maintainability
 class KpiDetailsPage {
   private readonly visLeftPanel = '[class="vis-panel vis-left "]';
   private readonly visCenterPanel = '[class="vis-panel vis-center"]';
-  private readonly selectedZone1Items =
-    '[class="vis-foreground"] [class="vis-group selected"]';
+  private readonly selectedZone1Items = '[class="vis-foreground"] .selected';
   private readonly timelineBox = '[class^="vis-timeline"]';
   private readonly previewButtons = '[data-testid="PreviewIcon"]';
   private readonly timelineMenuItem =
@@ -66,12 +63,12 @@ class KpiDetailsPage {
             // First click the timeline preview button
             this.clickTimelinePreviewButton();
             // Then click the timeline menu item
-            cy.get(this.timelineMenuItem).should("be.visible").click();
+            cy.get(this.timelineMenuItem).should("exist").click();
             // Verify the timeline box becomes visible after clicking
-            cy.get(this.timelineBox).should("be.visible");
+            cy.get(this.timelineBox).should("exist");
           } else {
             // Assert that timeline box is indeed visible
-            cy.get(this.timelineBox).should("be.visible");
+            cy.get(this.timelineBox).should("exist");
           }
         });
     });

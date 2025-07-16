@@ -25,6 +25,20 @@ export function redirectRequest() {
 }
 
 /**
+ * Intercepts GET requests to the json_config API endpoint
+ * 
+ * This intercept allows tests to:
+ * - Monitor when configuration requests are made during app initialization
+ * - Wait for configuration data to load before proceeding with tests
+ * - Ensure app is properly configured before running test scenarios
+ * 
+ * Usage: Use cy.wait('@jsonConfigRequest') to wait for this API call in tests
+ */
+export function jsonConfigRequest() {
+  cy.intercept("GET", "**/api/web/json_config").as("jsonConfigRequest");
+}
+
+/**
  * Blocks PostHog analytics tracking requests
  * PostHog is used for product analytics and user behavior tracking
  * Returns 204 (No Content) to prevent actual tracking during tests
@@ -88,4 +102,6 @@ export function preLoginIntercepts() {
   stubSentryRequests();
   stubTagsNewIntercept();
   stubNotationsIntercept();
+  redirectRequest();
+  jsonConfigRequest();
 }

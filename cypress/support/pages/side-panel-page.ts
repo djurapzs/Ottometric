@@ -1,84 +1,87 @@
 class SidePanelPage {
+  private readonly minimizeSidePanelSelector = '[data-testid="ChevronRightOutlinedIcon"]';
+  private readonly dashboardsTabSelector = '[data-testid="Dashboards-drawer"]';
+  private readonly ingestionReportTabSelector = '[data-testid="Ingestion Report-drawer"]';
+  private readonly kpiSensorTabSelector = '[data-testid="KPI Sensor-drawer"]';
+  private readonly kpiFeatureTabSelector = '[data-testid="KPI Feature-drawer"]';
+  private readonly fcmToggleSelector = '[data-testid="FCM-drawer"]';
+  private readonly lanesItemSelector = '[data-testid="Lanes-drawer"]';
+  private readonly nlQueryTabSelector = '[data-testid="NL Query-drawer"]';
+  private readonly isaToggleSelector = '[data-testid="ISA-drawer"]';
+  private readonly zone1ItemSelector = '[data-testid="Zone1-drawer"]';
+
   get minimizeSidePanel() {
-    return cy.get('[data-testid="ChevronRightOutlinedIcon"]');
+    return cy.get(this.minimizeSidePanelSelector);
   }
 
   get dashboardsTab() {
-    return cy.get('[data-testid="Dashboards-drawer"]');
+    return cy.get(this.dashboardsTabSelector);
   }
 
   get ingestionReportTab() {
-    return cy.get('[data-testid="Ingestion Report-drawer"]');
+    return cy.get(this.ingestionReportTabSelector);
   }
 
   get kpiSensorTab() {
-    return cy.get('[data-testid="KPI Sensor-drawer"]');
+    return cy.get(this.kpiSensorTabSelector);
   }
 
   get kpiFeatureTab() {
-    return cy.get('[data-testid="KPI Feature-drawer"]', { timeout: 10000 });
+    return cy.get(this.kpiFeatureTabSelector);
   }
 
   get fcmToggle() {
-    return cy.get('[data-testid="FCM-drawer"]');
+    return cy.get(this.fcmToggleSelector);
   }
 
   get lanesItem() {
-    return cy.get('[data-testid="Lanes-drawer"]');
+    return cy.get(this.lanesItemSelector);
   }
 
   get nlQueryTab() {
-    return cy.get('[data-testid="NL Query-drawer"]');
+    return cy.get(this.nlQueryTabSelector);
   }
 
   get isaToggle() {
-    return cy.get('[data-testid="ISA-drawer"]');
+    return cy.get(this.isaToggleSelector);
   }
 
   get zone1Item() {
-    return cy.get('[data-testid="Zone1-drawer"]');
+    return cy.get(this.zone1ItemSelector);
   }
 
   /** Navigate via sidepanel */
   goToDashboards(): void {
-    this.dashboardsTab.click();
+    cy.get(this.dashboardsTabSelector).click();
   }
 
   goToIngestionReport(): void {
-    this.ingestionReportTab.click();
+    cy.get(this.ingestionReportTabSelector).click();
   }
 
   goToKpiSensor(): void {
-    this.kpiSensorTab.should("exist").click({ force: true });
-  }
-
-  goToLanes(): void {
-    this.lanesItem.should("exist").click({ force: true });
+    cy.get(this.kpiSensorTabSelector).click();
   }
 
   goToKpiFeature(): void {
-    this.kpiFeatureTab.should("exist").click({ force: true });
+    cy.get(this.kpiFeatureTabSelector).click();
   }
 
   goToNlQuery(): void {
-    this.nlQueryTab.click();
+    cy.get(this.nlQueryTabSelector).click();
   }
 
   /** Click general buttons */
   clickBack(): void {
-    this.minimizeSidePanel.click();
+    cy.get(this.minimizeSidePanelSelector).click();
   }
 
   clickIsaToggle(): void {
-    this.isaToggle.should("exist").click({ force: true });
+    cy.get(this.isaToggleSelector).click();
   }
 
   clickZone1Item(): void {
-    this.zone1Item.should("exist").click({ force: true });
-  }
-
-  clickFcmToggle(): void {
-    this.fcmToggle.should("exist").click({ force: true });
+    cy.get(this.zone1ItemSelector).click();
   }
 }
 

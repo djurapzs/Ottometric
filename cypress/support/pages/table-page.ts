@@ -1,36 +1,45 @@
 class TablePage {
+  private readonly downloadButtonSelector = '[data-testid="download-pdf-csv"]';
+  private readonly tableSettingsButtonSelector = '[data-testid="table-settings"';
+  private readonly filtersButtonSelector = '[data-testid="FilterAltOutlinedIcon"]';
+  private readonly seeDetailsButtonSelector = '[data-testid="sendToDetails"]';
+  private readonly leftTableSelector = '[data-testid="table-left"]';
+  private readonly centerTableSelector = '[data-testid="table-center"]';
+
   get downloadButton() {
-    return cy.get('[data-testid="download-pdf-csv"]');
+    return cy.get(this.downloadButtonSelector);
   }
 
   get tableSettingsButton() {
-    return cy.get('[data-testid="table-settings"');
+    return cy.get(this.tableSettingsButtonSelector);
   }
 
   get filtersButton() {
-    return cy.get('[data-testid="FilterAltOutlinedIcon"]');
+    return cy.get(this.filtersButtonSelector);
   }
+  
   get seeDetailsButton() {
-    return cy.get('[data-testid="sendToDetails"]');
+    return cy.get(this.seeDetailsButtonSelector);
   }
 
   get leftTable() {
-    return cy.get('[data-testid="table-left"]');
+    return cy.get(this.leftTableSelector);
   }
+  
   get centerTable() {
-    return cy.get('[data-testid="table-center"]');
+    return cy.get(this.centerTableSelector);
   }
 
   get centerHeaderCells() {
-    return this.centerTable.find("thead th");
+    return cy.get(this.centerTableSelector).find("thead th");
   }
 
   get centerBodyRows() {
-    return this.centerTable.find("tbody tr");
+    return cy.get(this.centerTableSelector).find("tbody tr");
   }
 
   get centerTotalRow() {
-    return this.centerTable.find("tfoot tr");
+    return cy.get(this.centerTableSelector).find("tfoot tr");
   }
 
   /**
@@ -43,7 +52,7 @@ class TablePage {
     // Ensure table is ready before interaction
     this.ensureTableReady();
 
-    this.centerTable.get('input[type="checkbox"]').each(($el, index) => {
+    cy.get(this.centerTableSelector).get('input[type="checkbox"]').each(($el, index) => {
       if (index < checksNumber) {
         cy.wait(500);
         cy.wrap($el).check();
@@ -58,31 +67,29 @@ class TablePage {
    * @param columnIndex zero-based column index
    */
   getCenterColumnCells(columnIndex: number) {
-    return this.centerBodyRows
-      .should("be.visible")
-      .find(`td:nth-child(${columnIndex + 1})`);
+    return cy.get(this.centerTableSelector).find("tbody tr").find(`td:nth-child(${columnIndex + 1})`);
   }
 
   getCenterTotalCell(
     columnIndex: number
   ): Cypress.Chainable<JQuery<HTMLTableCellElement>> {
-    return this.centerTotalRow.should("be.visible").find("td").eq(columnIndex);
+    return cy.get(this.centerTableSelector).find("tfoot tr").find("td").eq(columnIndex);
   }
 
   rowCount(): Cypress.Chainable<number> {
-    return this.centerBodyRows.should("be.visible").its("length");
+    return cy.get(this.centerTableSelector).find("tbody tr").its("length");
   }
 
   clickDownload(): void {
-    this.downloadButton.click();
+    cy.get(this.downloadButtonSelector).click();
   }
 
   openTableSettings(): void {
-    this.tableSettingsButton.click();
+    cy.get(this.tableSettingsButtonSelector).click();
   }
 
   clickSeeDetailsButton(): void {
-    this.seeDetailsButton.should("be.enabled").click();
+    cy.get(this.seeDetailsButtonSelector).should("be.enabled").click();
   }
 
   /**
@@ -91,14 +98,14 @@ class TablePage {
    */
   waitForTableToLoad(): void {
     // First, wait for the table element to exist in DOM
-    this.centerTable.should("exist");
+    cy.get(this.centerTableSelector).should("exist");
 
     // Then wait for it to have content (rows)
-    this.centerBodyRows.should("have.length.greaterThan", 0);
+    cy.get(this.centerTableSelector).find("tbody tr").should("have.length.greaterThan", 0);
 
     // Optionally check visibility, but don't fail if it's not immediately visible
     // This handles cases where table might be rendered but not in viewport
-    cy.get('[data-testid="table-center"]').then(($table) => {
+    cy.get(this.centerTableSelector).then(($table) => {
       if (!$table.is(":visible")) {
         cy.log("Table not visible, scrolling into view...");
         cy.wrap($table).scrollIntoView();
@@ -114,11 +121,11 @@ class TablePage {
    * More robust than hard visibility assertion
    */
   ensureTableReady(): void {
-    this.centerTable.should("exist");
-    this.centerBodyRows.should("have.length.greaterThan", 0);
+    cy.get(this.centerTableSelector).should("exist");
+    cy.get(this.centerTableSelector).find("tbody tr").should("have.length.greaterThan", 0);
 
     // Check if table has checkboxes before proceeding
-    this.centerTable
+    cy.get(this.centerTableSelector)
       .get('[type="checkbox"]')
       .should("have.length.greaterThan", 0);
   }

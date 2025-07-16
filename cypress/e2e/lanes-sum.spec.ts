@@ -1,34 +1,42 @@
 // cypress/e2e/lanes-sum.spec.ts
 
-import { assertTotalIsValid } from "../support/assertations/assert-total-is-valid";
 import { CameraPrograms } from "../support/enums/camera-programs.enum";
-import {
-  calculateColumnAverages,
-  getFooterValues,
-} from "../support/helpers/calculate-column-average";
 import { preLoginIntercepts } from "../support/intercepts/pre-login";
-import tablePage from "../support/pages/table-page";
+import { LanesSumHelper } from "../support/helpers/lanes-sum-helper";
+import { ILanesSumTestData } from "../support/interfaces";
 
-describe("Check if the sum of values from each row corresponds with the value from the total row", () => {
+// Test data constants for better maintainability
+const TEST_DATA: ILanesSumTestData = {
+  program: CameraPrograms.VT1,
+  tolerance: 0.1,
+  description: "Test lane sum validation with 0.1% tolerance",
+} as const;
+
+describe("Lane Sum Validation", () => {
+  let helper: LanesSumHelper;
+
   beforeEach(() => {
+    cy.log("Setting up test environment for lane sum validation");
     // Prevents unnecessary requests before login.
     preLoginIntercepts();
     cy.visit("/");
     cy.login();
+
+    // Initialize helper with test data
+    helper = new LanesSumHelper(TEST_DATA);
   });
-  it("should validate if total value corresponds with row sums", () => {
-    cy.selectProgram(CameraPrograms.VT1);
 
-    cy.goToKpiLanes();
-    tablePage.waitForTableToLoad();
+  describe("Row vs Total Validation", () => {
+    it("should validate that total values match row sums", () => {
+      cy.log(
+        `Starting lane sum validation test for program: ${TEST_DATA.program}`
+      );
 
-    getFooterValues(tablePage.centerTable).then((footerValues) => {
-      calculateColumnAverages(
-        tablePage.centerTable,
-        cy.wrap(footerValues)
-      ).then((averages) => {
-        assertTotalIsValid(footerValues, averages);
-      });
+      // Arrange - Navigate to the test environment
+      helper.navigateToKpiLanes();
+
+      // Act & Assert - Validate row sum calculations
+      helper.validateRowSumCalculation();
     });
   });
 });

@@ -47,14 +47,6 @@ Cypress.Commands.add("goToKpiSensor", () => {
   sidePanelPage.goToKpiSensor();
 });
 
-Cypress.Commands.add("goToFCM", () => {
-  sidePanelPage.clickFcmToggle();
-});
-
-Cypress.Commands.add("goToLanes", () => {
-  sidePanelPage.goToLanes();
-});
-
 Cypress.Commands.add("goToKpiFeature", () => {
   sidePanelPage.goToKpiFeature();
 });
@@ -73,10 +65,19 @@ Cypress.Commands.add("goToKpiLanes", () => {
 });
 
 Cypress.Commands.add("goToKpiZone1", () => {
+  // Wait for app configuration to load before starting navigation
+  cy.wait("@jsonConfigRequest");
+
+  // Ensure navigation elements are ready before proceeding
+  sidePanelPage.kpiFeatureTab.should("be.visible");
+
   cy.goToKpiFeature();
   cy.goToISA();
   cy.goToZone1();
+
+  // Wait for table to load after navigation
   tablePage.centerTable.should("exist");
+  tablePage.centerTable.should("be.visible");
 });
 
 export {};

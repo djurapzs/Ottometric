@@ -1,40 +1,51 @@
-// cypress/e2e/lanes-sum.spec.ts
+// cypress/e2e/count-fn-events.spec.ts
 import { Zone1 } from "../support/enums/zone1.enum";
 import { CameraPrograms } from "../support/enums/camera-programs.enum";
-import { followRedirectionAndVisit } from "../support/helpers/handle-redirection";
 import {
-  preLoginIntercepts,
   redirectRequest,
+  preLoginIntercepts,
 } from "../support/intercepts/pre-login";
-import kpiDetailsPage from "../support/pages/kpi-details-page";
-import tablePage from "../support/pages/table-page";
-import { table } from "console";
+import { CountFnEventsHelper } from "../support/helpers/count-fn-events-helper";
+import { ICountFnEventsTestData } from "../support/interfaces";
 
-describe("Count the FN events in the timeline.", () => {
+// Test data constants for better maintainability
+const TEST_DATA: ICountFnEventsTestData = {
+  program: CameraPrograms.VI1,
+  zone: Zone1.FN,
+  dtidCount: 7,
+  description: "Test counting FN events in Zone1 for VI1 program",
+} as const;
+
+describe("FN Events Timeline", () => {
+  let helper: CountFnEventsHelper;
+
   beforeEach(() => {
+    cy.log("Setting up test environment for FN event counting");
     // Prevents unnecessary requests before login.
     preLoginIntercepts();
     cy.visit("/");
     cy.login();
+
+    // Initialize helper with test data
+    helper = new CountFnEventsHelper(TEST_DATA);
   });
-  it("should count the FN events for the selected DTIDs in the timeline.", () => {
-    redirectRequest();
 
-    cy.selectProgram(CameraPrograms.VI1);
-    cy.goToKpiZone1();
-    tablePage.waitForTableToLoad();
-    // Select the DTIDs for which we want to count the FN events (from 1 to N).
-    tablePage.DTIDmultiSelect(7);
-    tablePage.clickSeeDetailsButton();
-    // Keeps cypress from failing due to a redirection (keeps him in same tab).
-    followRedirectionAndVisit("VI1", "zone1");
+  describe("Event Counting", () => {
+    it("should count FN events for selected DTIDs", () => {
+      cy.log(`Starting FN event count test with ${TEST_DATA.dtidCount} DTIDs`);
+      redirectRequest();
 
-    kpiDetailsPage.clickTimelineMenuItemIfNotVisible();
+      // Arrange - Navigate to the test environment
+      helper.navigateToKpiZone();
 
-    kpiDetailsPage.selectZone1Value(Zone1.FN);
-    // Result is displayed in dev tools console within the runner.
-    kpiDetailsPage.getTotalEventCount().then((count) => {
-      console.log("Total FN events count:", count);
+      // Act - Select DTIDs and navigate to details
+      helper.selectItemsAndNavigateToDetails();
+
+      // Act - Access timeline and select zone
+      helper.accessTimelineAndSelectZone();
+
+      // Assert - Validate event count
+      helper.validateEventCount();
     });
   });
 });

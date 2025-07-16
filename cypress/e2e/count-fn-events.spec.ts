@@ -48,6 +48,8 @@ describe("FN Events Timeline", () => {
         cy.log("Redirection request completed");
       });
 
+      cy.wait(20000); // Additional wait to ensure page is fully loaded
+
       // Act - Access timeline and select zone
       helper.accessTimelineAndSelectZone();
 

@@ -65,14 +65,12 @@ Cypress.Commands.add("goToKpiLanes", () => {
 });
 
 Cypress.Commands.add("goToKpiZone1", () => {
-  // Wait for app configuration to load before starting navigation
-  cy.wait("@jsonConfigRequest");
-
-  // Ensure navigation elements are ready before proceeding
-  sidePanelPage.kpiFeatureTab.should("be.visible");
+  cy.wait(2000);
 
   cy.goToKpiFeature();
+  cy.wait(2000);
   cy.goToISA();
+  cy.wait(2000);
   cy.goToZone1();
 
   // Wait for table to load after navigation

@@ -15,6 +15,7 @@ export function followRedirectionAndVisit(
 
     cy.visit(redirectUrl);
 
+    cy.wait(20000);
     assertKpiDetailsPageLoaded();
   });
 }
